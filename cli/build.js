@@ -151,6 +151,8 @@ function buildNativeApp(nativeConfig) {
   }
 }
 
-module.exports = {
-  buildProject
-};
+// Named export for ES modules
+export { buildProject };
+
+// CommonJS export for backwards compatibility
+module.exports = { buildProject };

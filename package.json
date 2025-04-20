@@ -4,6 +4,9 @@
     "description": "A comprehensive JavaScript framework CLI for building web and native applications",
     "main": "index.js",
     "type": "module",
+    "exports": {
+        "./build": "./cli/build.js"
+      },
     "bin": {
       "reactorjs": "./cli/index.js"
     },
@@ -12,6 +15,7 @@
     },
     "scripts": {
       "test": "node --test",
+      "test:cli": "node ./test-script.js",
       "lint": "eslint .",
       "prepare": "chmod +x ./cli/index.js"
     },

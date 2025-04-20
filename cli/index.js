@@ -6,9 +6,9 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import { createNewProject } from './create-app.js';
 import { startDevServer } from './dev-server.js';
-import { buildProject } from './build.js';
 import { generateComponent } from './generate.js';
 import { generateSampleProjectFiles } from './sample-files.js';
+const { buildProject } = require('./build.js');
 
 // Create a new CLI program
 const program = new Command();
@@ -21,7 +21,7 @@ program
 
 // Create command for generating projects
 program
-  .command('create <name>')
+  .command('create <n>')
   .description('Create a new ReactorJS project')
   .option('-p, --platforms <platforms>', 'Platforms to support (web, native, or both)', 'both')
   .option('-t, --typescript', 'Use TypeScript')
@@ -57,7 +57,7 @@ program
 
 // Generate command
 program
-  .command('generate <type> <name>')
+  .command('generate <type> <n>')
   .description('Generate components, pages, layouts, etc.')
   .action((type, name) => {
     console.log(chalk.blue(`Generating ${type}: ${name}`));
