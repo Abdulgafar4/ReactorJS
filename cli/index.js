@@ -1,81 +1,110 @@
 #!/usr/bin/env node
 
-// cli/index.js - Main CLI entry point
+// cli/index.js - Main CLI entry point with enhanced command handling
 
-const { createNewProject } = require('./create-app');
-const { startDevServer } = require('./dev-server');
-const { buildProject } = require('./build');
-const { generateComponent } = require('./generate');
+import { Command } from 'commander';
+import chalk from 'chalk';
+import { createNewProject } from './create-app.js';
+import { startDevServer } from './dev-server.js';
+import { buildProject } from './build.js';
+import { generateComponent } from './generate.js';
+import { generateSampleProjectFiles } from './sample-files.js';
 
-/**
- * Print help information
- */
-function printHelp() {
-  console.log(`
-ReactorJS CLI - Build full-stack web and native applications
+// Create a new CLI program
+const program = new Command();
 
-Commands:
-  create [name]          Create a new ReactorJS project
-  dev                    Start development server
-  build [platform]       Build project for production (web, native, or all)
-  start                  Start the production server
-  generate [type] [name] Generate a new component, page, or layout
-  help                   Show this help message
+// Set program metadata
+program
+  .name('reactorjs')
+  .description('ReactorJS CLI - Build full-stack web and native applications')
+  .version('0.1.0', '-v, --version', 'Output the current version');
 
-Examples:
-  reactorjs create my-app
-  reactorjs dev
-  reactorjs build web
-  reactorjs build native
-  reactorjs generate component Button
-  reactorjs generate page Home
-  `);
-  process.exit(0);
+// Create command for generating projects
+program
+  .command('create <name>')
+  .description('Create a new ReactorJS project')
+  .option('-p, --platforms <platforms>', 'Platforms to support (web, native, or both)', 'both')
+  .option('-t, --typescript', 'Use TypeScript')
+  .option('--tailwind', 'Include Tailwind CSS')
+  .option('--shadcn', 'Include shadcn/ui components')
+  .action((name, options) => {
+    console.log(chalk.blue(`Creating new ReactorJS project: ${name}`));
+    
+    createNewProject([name, ...(
+      Object.entries(options)
+        .filter(([key]) => ['platforms', 'typescript', 'tailwind', 'shadcn'].includes(key))
+        .map(([key, value]) => `--${key}=${value}`)
+    )]);
+  });
+
+// Development server command
+program
+  .command('dev')
+  .description('Start development server')
+  .action(() => {
+    console.log(chalk.blue('Starting development server...'));
+    startDevServer();
+  });
+
+// Build command
+program
+  .command('build [platform]')
+  .description('Build project for production')
+  .action((platform) => {
+    console.log(chalk.blue(`Building project${platform ? ` for ${platform}` : ''}`));
+    buildProject(platform ? [platform] : []);
+  });
+
+// Generate command
+program
+  .command('generate <type> <name>')
+  .description('Generate components, pages, layouts, etc.')
+  .action((type, name) => {
+    console.log(chalk.blue(`Generating ${type}: ${name}`));
+    generateComponent([type, name]);
+  });
+
+// Sample files command (for debugging/development)
+program
+  .command('sample <dir>')
+  .description('Generate sample project files (for development/testing)')
+  .option('-p, --platforms <platforms>', 'Platforms to support (web, native, or both)', 'both')
+  .option('-t, --typescript', 'Use TypeScript')
+  .option('--tailwind', 'Include Tailwind CSS')
+  .option('--shadcn', 'Include shadcn/ui components')
+  .action((dir, options) => {
+    console.log(chalk.blue(`Generating sample files in: ${dir}`));
+    
+    generateSampleProjectFiles(dir, {
+      platforms: options.platforms || 'both',
+      useTypeScript: !!options.typescript,
+      includeTailwind: !!options.tailwind,
+      includeShadcn: !!options.shadcn
+    });
+  });
+
+// Start command (for production server)
+program
+  .command('start')
+  .description('Start the production server')
+  .action(() => {
+    console.log(chalk.blue('Starting production server...'));
+    console.log(chalk.yellow('Not implemented in this demo version.'));
+    process.exit(1);
+  });
+
+// Help command
+program
+  .command('help')
+  .description('Show help information')
+  .action(() => {
+    program.help();
+  });
+
+// Parse arguments
+program.parse(process.argv);
+
+// Show help if no command is provided
+if (!process.argv.slice(2).length) {
+  program.help();
 }
-
-/**
- * Start the production server
- */
-function startProject() {
-  console.log('Starting production server...');
-  
-  // In a real implementation, this would:
-  // 1. Load the ReactorJS config
-  // 2. Start a production-ready server
-  console.log('Production server not implemented in this demo.');
-  
-  process.exit(0);
-}
-
-/**
- * Main CLI entry point
- */
-function main() {
-  const args = process.argv.slice(2);
-  const command = args[0];
-  
-  switch (command) {
-    case 'create':
-      createNewProject(args.slice(1));
-      break;
-    case 'dev':
-      startDevServer();
-      break;
-    case 'build':
-      buildProject(args.slice(1));
-      break;
-    case 'start':
-      startProject();
-      break;
-    case 'generate':
-      generateComponent(args.slice(1));
-      break;
-    case 'help':
-    default:
-      printHelp();
-      break;
-  }
-}
-
-// Run the CLI
-main();

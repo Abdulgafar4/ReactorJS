@@ -1,0 +1,49 @@
+{
+    "name": "reactorjs",
+    "version": "0.1.0",
+    "description": "A comprehensive JavaScript framework for building web and native applications",
+    "main": "index.js",
+    "type": "module",
+    "bin": {
+      "reactorjs": "./cli/index.js"
+    },
+    "engines": {
+      "node": ">=18.0.0"
+    },
+    "scripts": {
+      "test": "node --test",
+      "lint": "eslint .",
+      "prepare": "chmod +x ./cli/index.js"
+    },
+    "keywords": [
+      "framework",
+      "react",
+      "web",
+      "native",
+      "typescript",
+      "tailwind"
+    ],
+    "author": "ReactorJS Team",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Abdulgafar4/ReactorJS.git"
+    },
+    "homepage": "https://reactorjs.dev",
+    "bugs": {
+      "url": "https://github.com/Abdulgafar4/reactorjs/issues"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "chalk": "^5.3.0",
+      "commander": "^11.1.0",
+      "fs-extra": "^11.2.0"
+    },
+    "devDependencies": {
+      "@types/node": "^20.10.0",
+      "eslint": "^8.54.0",
+      "typescript": "^5.3.2"
+    }
+  }
