@@ -1,7 +1,7 @@
-{
-    "name": "reactorjs",
+  {
+    "name": "@reactorjs/cli",
     "version": "0.1.0",
-    "description": "A comprehensive JavaScript framework for building web and native applications",
+    "description": "A comprehensive JavaScript framework CLI for building web and native applications",
     "main": "index.js",
     "type": "module",
     "bin": {
@@ -21,7 +21,8 @@
       "web",
       "native",
       "typescript",
-      "tailwind"
+      "tailwind",
+      "cli"
     ],
     "author": "ReactorJS Team",
     "license": "MIT",
@@ -29,9 +30,9 @@
       "type": "git",
       "url": "https://github.com/Abdulgafar4/ReactorJS.git"
     },
-    "homepage": "https://reactorjs.dev",
+    "homepage": "https://reactorjs.vercel.app",
     "bugs": {
-      "url": "https://github.com/Abdulgafar4/reactorjs/issues"
+        "url": "https://github.com/Abdulgafar4/reactorjs/issues"
     },
     "publishConfig": {
       "access": "public"
