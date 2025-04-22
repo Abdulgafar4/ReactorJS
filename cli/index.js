@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { createNewProject } from './create-app.js';
 import { startDevServer } from './dev-server.js';
 import { generateComponent } from './generate.js';
-import { generateSampleProjectFiles } from './sample-files.js';
+import { createSampleFiles } from './sample-files.js';
 import buildProject  from './build.js';
 
 // Create a new CLI program
@@ -75,7 +75,7 @@ program
   .action((dir, options) => {
     console.log(chalk.blue(`Generating sample files in: ${dir}`));
     
-    generateSampleProjectFiles(dir, {
+    createSampleFiles(dir, {
       platforms: options.platforms || 'both',
       useTypeScript: !!options.typescript,
       includeTailwind: !!options.tailwind,
