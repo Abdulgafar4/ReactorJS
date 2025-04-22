@@ -1,13 +1,13 @@
 // cli/build.js - Production build system
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Build the project for production
  * @param {string[]} args - CLI arguments
  */
-function buildProject(args) {
+export default async function buildProject(args) {
   const platform = args[0] || 'all';
   
   console.log(`Building project for ${platform}...`);
@@ -20,7 +20,9 @@ function buildProject(args) {
   }
   
   try {
-    const config = require(configPath);
+    // Use dynamic import since we're in an ES module
+    const importedConfig = await import(configPath);
+    const config = importedConfig.default || importedConfig;
     
     // Extract configuration
     const platforms = config.platforms || ['web'];
@@ -150,9 +152,3 @@ function buildNativeApp(nativeConfig) {
     console.log('- IPA: ios/build/ReactorJSApp.ipa');
   }
 }
-
-// Named export for ES modules
-export { buildProject };
-
-// CommonJS export for backwards compatibility
-module.exports = { buildProject };

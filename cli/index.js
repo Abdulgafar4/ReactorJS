@@ -8,7 +8,7 @@ import { createNewProject } from './create-app.js';
 import { startDevServer } from './dev-server.js';
 import { generateComponent } from './generate.js';
 import { generateSampleProjectFiles } from './sample-files.js';
-const { buildProject } = require('./build.js');
+import buildProject  from './build.js';
 
 // Create a new CLI program
 const program = new Command();
