@@ -27,7 +27,7 @@ class Link extends Component {
     
     if (!e.defaultPrevented) {
       // Get router instance
-      const router = this.props.router || (window.__REACTORJS_ROUTER__);
+      const router = this.props.router || (window.__CLYRA_ROUTER__);
       
       if (router) {
         router.navigate(href, {

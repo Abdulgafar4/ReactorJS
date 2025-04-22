@@ -14,8 +14,8 @@ import path from 'path';
   
   const configPath = findConfigFile();
   if (!configPath) {
-    console.error('Error: Could not find ReactorJS configuration file.');
-    console.error('Make sure you have a reactorjs.config.js or reactorjs.config.ts file in your project.');
+    console.error('Error: Could not find Clyra configuration file.');
+    console.error('Make sure you have a clyra.config.js or clyra.config.ts file in your project.');
     process.exit(1);
   }
   
@@ -55,20 +55,20 @@ import path from 'path';
 }
 
 /**
- * Find the ReactorJS configuration file
+ * Find the Clyra configuration file
  * @returns {string|null} Path to configuration file or null if not found
  */
 function findConfigFile() {
   const cwd = process.cwd();
   
   // Check for JavaScript config first
-  const jsConfig = path.join(cwd, 'reactorjs.config.js');
+  const jsConfig = path.join(cwd, 'clyra.config.js');
   if (fs.existsSync(jsConfig)) {
     return jsConfig;
   }
   
   // Then check for TypeScript config
-  const tsConfig = path.join(cwd, 'reactorjs.config.ts');
+  const tsConfig = path.join(cwd, 'clyra.config.ts');
   if (fs.existsSync(tsConfig)) {
     // In a real implementation, we'd need to handle TypeScript compilation
     console.warn('TypeScript configuration detected. In this demo, TypeScript processing is not fully implemented.');
@@ -121,7 +121,7 @@ function buildWebApp(webConfig) {
  */
 function buildNativeApp(nativeConfig) {
   const platforms = nativeConfig.platforms || ['ios', 'android'];
-  const appId = nativeConfig.appId || 'com.example.reactorjsapp';
+  const appId = nativeConfig.appId || 'com.example.clyraapp';
   
   console.log(`Building for platforms: ${platforms.join(', ')}`);
   console.log(`App ID: ${appId}`);
@@ -149,7 +149,7 @@ function buildNativeApp(nativeConfig) {
   
   if (platforms.includes('ios')) {
     console.log('\niOS build (simulated):');
-    console.log('- IPA: ios/build/ReactorJSApp.ipa');
+    console.log('- IPA: ios/build/ClyraApp.ipa');
   }
 }
 

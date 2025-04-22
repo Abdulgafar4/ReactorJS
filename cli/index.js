@@ -15,20 +15,20 @@ const program = new Command();
 
 // Set program metadata
 program
-  .name('reactorjs')
-  .description('ReactorJS CLI - Build full-stack web and native applications')
+  .name('clyra')
+  .description('Clyra CLI - Build full-stack web and native applications')
   .version('0.1.0', '-v, --version', 'Output the current version');
 
 // Create command for generating projects
 program
   .command('create <n>')
-  .description('Create a new ReactorJS project')
+  .description('Create a new Clyra project')
   .option('-p, --platforms <platforms>', 'Platforms to support (web, native, or both)', 'both')
   .option('-t, --typescript', 'Use TypeScript')
   .option('--tailwind', 'Include Tailwind CSS')
   .option('--shadcn', 'Include shadcn/ui components')
   .action((name, options) => {
-    console.log(chalk.blue(`Creating new ReactorJS project: ${name}`));
+    console.log(chalk.blue(`Creating new Clyra project: ${name}`));
     
     createNewProject([name, ...(
       Object.entries(options)

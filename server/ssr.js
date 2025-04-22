@@ -114,7 +114,7 @@ function kebabCase(str) {
  */
 function renderToDocument(element, options = {}) {
   const html = renderToString(element);
-  const { title = 'ReactorJS App', styles = '', scripts = '', head = '' } = options;
+  const { title = 'Clyra App', styles = '', scripts = '', head = '' } = options;
   
   return `<!DOCTYPE html>
 <html>
@@ -132,7 +132,7 @@ function renderToDocument(element, options = {}) {
   <div id="app">${html}</div>
   
   <script type="text/javascript">
-    window.__REACTORJS_INITIAL_DATA__ = ${JSON.stringify(options.initialData || {})};
+    window.__CLYRA_INITIAL_DATA__ = ${JSON.stringify(options.initialData || {})};
   </script>
   
   ${scripts}
@@ -206,7 +206,7 @@ function createServerApp(options = {}) {
     }
     
     const html = renderToDocument(element, {
-      title: options.title || 'ReactorJS App',
+      title: options.title || 'Clyra App',
       styles: options.styles || '',
       scripts: options.scripts || '',
       head: options.head || '',
@@ -238,7 +238,7 @@ function createServerApp(options = {}) {
  */
 function hydrate(options = {}) {
   const container = options.container || document.getElementById('app');
-  const initialData = window.__REACTORJS_INITIAL_DATA__ || {};
+  const initialData = window.__CLYRA_INITIAL_DATA__ || {};
   
   const router = new FileRouter({
     ...options,
@@ -263,7 +263,7 @@ function hydrate(options = {}) {
   }
   
   // Make router available globally
-  window.__REACTORJS_ROUTER__ = router;
+  window.__CLYRA_ROUTER__ = router;
   
   // Mount the router
   router.mount(container);

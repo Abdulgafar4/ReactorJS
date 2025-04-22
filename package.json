@@ -1,5 +1,5 @@
 {
-    "name": "reactorjs-framework-cli",
+    "name": "clyra",
     "version": "0.3.0",
     "description": "A comprehensive JavaScript framework CLI for building web and native applications",
     "main": "index.js",
@@ -8,7 +8,7 @@
         "./build": "./cli/build.js"
     },
     "bin": {
-        "reactorjs": "./cli/index.js"
+        "clyra": "./cli/index.js"
     },
     "engines": {
         "node": ">=18.0.0"
@@ -28,13 +28,13 @@
         "tailwind",
         "cli"
     ],
-    "author": "ReactorJS Team",
+    "author": "Clyra Team",
     "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/Abdulgafar4/ReactorJS.git"
     },
-    "homepage": "https://reactorjs.vercel.app",
+    "homepage": "https://clyra.vercel.app",
     "bugs": {
         "url": "https://github.com/Abdulgafar4/reactorjs/issues"
     },

@@ -46,7 +46,7 @@ function runCliCommand(command) {
 
 // Run tests
 async function runTests() {
-  console.log('Starting ReactorJS CLI Test Suite');
+  console.log('Starting Clyra CLI Test Suite');
   console.log('==================================');
 
   for (const config of testConfigurations) {
@@ -61,7 +61,7 @@ async function runTests() {
     }
 
     // Create project
-    const createCommand = `reactorjs create ${projectPath} ${config.options.join(' ')}`;
+    const createCommand = `clyra create ${projectPath} ${config.options.join(' ')}`;
     const createResult = runCliCommand(createCommand);
 
     if (!createResult) {
@@ -92,7 +92,7 @@ async function runTests() {
     console.log(`Project ${config.name} created successfully!`);
   }
 
-  console.log('\nReactorJS CLI Test Suite Completed');
+  console.log('\nClyra CLI Test Suite Completed');
 }
 
 // Run the tests

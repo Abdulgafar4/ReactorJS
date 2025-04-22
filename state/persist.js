@@ -20,7 +20,7 @@
  */
 function createPersistState(options = {}) {
     const {
-      key = 'reactorjs_state',
+      key = 'clyra_state',
       storage = 'localStorage',
       whitelist = null,
       blacklist = null,

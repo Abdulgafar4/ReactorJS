@@ -13,7 +13,7 @@ export function generateComponent(args) {
   
   if (!type || !name) {
     console.error('Error: Please provide a type and name');
-    console.log('Example: reactorjs generate component Button');
+    console.log('Example: clyra generate component Button');
     process.exit(1);
   }
   
@@ -54,7 +54,7 @@ function detectProjectSettings() {
   // Check for TypeScript
   if (
     fs.existsSync(path.join(cwd, 'tsconfig.json')) ||
-    fs.existsSync(path.join(cwd, 'reactorjs.config.ts'))
+    fs.existsSync(path.join(cwd, 'clyra.config.ts'))
   ) {
     settings.useTypeScript = true;
   }
@@ -71,8 +71,8 @@ function detectProjectSettings() {
     );
     
     if (
-      (packageJson.dependencies && packageJson.dependencies['reactorjs-ui']) ||
-      (packageJson.dependencies && packageJson.dependencies['reactorjs-styling'])
+      (packageJson.dependencies && packageJson.dependencies['clyra-ui']) ||
+      (packageJson.dependencies && packageJson.dependencies['clyra-styling'])
     ) {
       settings.useShadcn = true;
     }
@@ -163,10 +163,10 @@ function generateFile(type, name, settings) {
 function generateComponentTemplate(name, settings) {
   const { useTypeScript, useTailwind, useShadcn } = settings;
   
-  let imports = [`import ReactorJS from 'reactorjs';`];
+  let imports = [`import Clyra from 'clyra';`];
   
   if (useShadcn) {
-    imports.push(`import { ui } from 'reactorjs-styling';`);
+    imports.push(`import { ui } from 'clyra-styling';`);
   }
   
   const typescript = useTypeScript ? `
@@ -199,10 +199,10 @@ export default ${name};
 function generatePageTemplate(name, settings) {
   const { useTypeScript, useTailwind, useShadcn } = settings;
   
-  let imports = [`import ReactorJS from 'reactorjs';`];
+  let imports = [`import Clyra from 'clyra';`];
   
   if (useShadcn) {
-    imports.push(`import { ui } from 'reactorjs-styling';`);
+    imports.push(`import { ui } from 'clyra-styling';`);
   }
   
   const typescript = useTypeScript ? `
@@ -248,10 +248,10 @@ export default ${name};
 function generateLayoutTemplate(name, settings) {
   const { useTypeScript, useTailwind, useShadcn } = settings;
   
-  let imports = [`import ReactorJS from 'reactorjs';`];
+  let imports = [`import Clyra from 'clyra';`];
   
   if (useShadcn) {
-    imports.push(`import { ui } from 'reactorjs-styling';`);
+    imports.push(`import { ui } from 'clyra-styling';`);
   }
   
   const typescript = useTypeScript ? `
@@ -296,14 +296,14 @@ function generateHookTemplate(name, settings) {
   const { useTypeScript } = settings;
   const hookName = `use${name}`;
   
-  return `import ReactorJS from 'reactorjs';
+  return `import Clyra from 'clyra';
 
 /**
  * ${name} hook
  * ${useTypeScript ? '@returns {[any, (value: any) => void]}' : ''}
  */
 function ${hookName}(${useTypeScript ? 'initialValue?: any' : 'initialValue'}) {
-  const [value, setValue] = ReactorJS.useState(initialValue);
+  const [value, setValue] = Clyra.useState(initialValue);
   
   // Your hook logic here
   

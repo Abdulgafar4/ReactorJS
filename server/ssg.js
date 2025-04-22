@@ -16,7 +16,7 @@ class StaticSiteGenerator {
       pages: options.pages || {},
       layouts: options.layouts || {},
       notFound: options.notFound,
-      title: options.title || 'ReactorJS App',
+      title: options.title || 'Clyra App',
       styles: options.styles || '',
       scripts: options.scripts || '',
       head: options.head || '',

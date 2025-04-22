@@ -1,8 +1,8 @@
-# ReactorJS Framework
+# Clyra Framework
 
-ReactorJS is a comprehensive JavaScript framework that combines the best features from React, Next.js, Vue.js, and Angular with built-in support for Tailwind CSS, shadcn/ui components, and React Native compatibility. Build powerful web and mobile applications with a unified, elegant API.
+Clyra is a comprehensive JavaScript framework that combines the best features from React, Next.js, Vue.js, and Angular with built-in support for Tailwind CSS, shadcn/ui components, and React Native compatibility. Build powerful web and mobile applications with a unified, elegant API.
 
-![ReactorJS Framework](https://place-hold.it/800x400?text=ReactorJS&fontsize=32)
+![Clyra Framework](https://place-hold.it/800x400?text=Clyra&fontsize=32)
 
 ## 🌟 Features
 
@@ -53,14 +53,14 @@ ReactorJS is a comprehensive JavaScript framework that combines the best feature
 
 ## 🚀 Quick Start
 
-### Create a new ReactorJS project
+### Create a new Clyra project
 
 ```bash
 # Install the CLI globally
-npm install -g reactorjs-cli
+npm install -g clyra-cli
 
 # Create a new project
-reactorjs create my-app
+clyra create my-app
 
 # Navigate to the project directory
 cd my-app
@@ -86,7 +86,7 @@ my-app/
 │   │   └── screens/     # Native screens
 │   └── styles/          # Global styles
 ├── public/              # Static assets
-├── reactorjs.config.js  # Framework configuration
+├── clyra.config.js  # Framework configuration
 ├── tailwind.config.js   # Tailwind CSS configuration
 └── package.json         # Project dependencies
 ```
@@ -96,10 +96,10 @@ my-app/
 ### Creating a Component
 
 ```jsx
-import ReactorJS from 'reactorjs';
+import Clyra from 'clyra';
 
 // Class Component
-class Counter extends ReactorJS.Component {
+class Counter extends Clyra.Component {
   constructor(props) {
     super(props);
     this.state = { count: 0 };
@@ -126,9 +126,9 @@ class Counter extends ReactorJS.Component {
 
 // Functional Component with Hooks
 function CounterWithHooks() {
-  const [count, setCount] = ReactorJS.useState(0);
+  const [count, setCount] = Clyra.useState(0);
   
-  ReactorJS.useEffect(() => {
+  Clyra.useEffect(() => {
     document.title = `Count: ${count}`;
   }, [count]);
   
@@ -149,8 +149,8 @@ function CounterWithHooks() {
 ### Using the Router
 
 ```jsx
-import ReactorJS from 'reactorjs';
-import RouterComponents from 'reactorjs-router';
+import Clyra from 'clyra';
+import RouterComponents from 'clyra-router';
 
 const { Link } = RouterComponents;
 
@@ -189,12 +189,12 @@ UserProfile.getInitialProps = async ({ params }) => {
 ### Using shadcn/ui Components
 
 ```jsx
-import ReactorJS from 'reactorjs';
-import { ui } from 'reactorjs-styling';
+import Clyra from 'clyra';
+import { ui } from 'clyra-styling';
 
 function LoginForm() {
-  const [email, setEmail] = ReactorJS.useState('');
-  const [password, setPassword] = ReactorJS.useState('');
+  const [email, setEmail] = Clyra.useState('');
+  const [password, setPassword] = Clyra.useState('');
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -254,17 +254,17 @@ function LoginForm() {
 ### Creating React Native Screens
 
 ```jsx
-import ReactorJS from 'reactorjs';
-import { reactorNative } from 'reactorjs-styling';
+import Clyra from 'clyra';
+import { reactorNative } from 'clyra-styling';
 
 const { View, Text, TouchableOpacity, ScrollView } = reactorNative;
 
 function HomeScreen() {
-  const [count, setCount] = ReactorJS.useState(0);
+  const [count, setCount] = Clyra.useState(0);
   
   return (
     <ScrollView className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold mb-6">ReactorJS Native</Text>
+      <Text className="text-2xl font-bold mb-6">Clyra Native</Text>
       
       <View className="bg-gray-100 rounded-lg p-6 mb-6">
         <Text className="text-lg mb-4">Count: {count}</Text>
@@ -316,24 +316,24 @@ function HomeScreen() {
 
 ## 📦 Package Structure
 
-ReactorJS is composed of several packages that work together:
+Clyra is composed of several packages that work together:
 
-- **reactorjs**: Core framework with Virtual DOM, Component system, and Hooks
-- **reactorjs-router**: File-based routing and navigation system
-- **reactorjs-styling**: Styling solution with Tailwind CSS and shadcn/ui integration
-- **reactorjs-native**: React Native integration and bridge
-- **reactorjs-cli**: Command-line interface for project scaffolding
-- **reactorjs-ui**: UI component library based on shadcn/ui
+- **clyra**: Core framework with Virtual DOM, Component system, and Hooks
+- **clyra-router**: File-based routing and navigation system
+- **clyra-styling**: Styling solution with Tailwind CSS and shadcn/ui integration
+- **clyra-native**: React Native integration and bridge
+- **clyra-cli**: Command-line interface for project scaffolding
+- **clyra-ui**: UI component library based on shadcn/ui
 
 ## 🔧 Configuration
 
-ReactorJS uses a configuration file (`reactorjs.config.js`) to customize various aspects of your application:
+Clyra uses a configuration file (`clyra.config.js`) to customize various aspects of your application:
 
 ```js
-// reactorjs.config.js
+// clyra.config.js
 module.exports = {
   // General settings
-  appName: 'My ReactorJS App',
+  appName: 'My Clyra App',
   
   // Platforms to build for
   platforms: ['web', 'native'],
@@ -372,13 +372,13 @@ module.exports = {
 
 ## 🔄 State Management
 
-ReactorJS offers multiple ways to manage state:
+Clyra offers multiple ways to manage state:
 
 ### 1. Component State
 
 ```jsx
 // Class component
-class Counter extends ReactorJS.Component {
+class Counter extends Clyra.Component {
   constructor(props) {
     super(props);
     this.state = { count: 0 };
@@ -400,7 +400,7 @@ class Counter extends ReactorJS.Component {
 
 // Functional component with hooks
 function HookCounter() {
-  const [count, setCount] = ReactorJS.useState(0);
+  const [count, setCount] = Clyra.useState(0);
   
   return (
     <div>
@@ -415,11 +415,11 @@ function HookCounter() {
 
 ```jsx
 // Create a context
-const ThemeContext = ReactorJS.createContext({ theme: 'light' });
+const ThemeContext = Clyra.createContext({ theme: 'light' });
 
 // Provider component
 function ThemeProvider({ children }) {
-  const [theme, setTheme] = ReactorJS.useState('light');
+  const [theme, setTheme] = Clyra.useState('light');
   
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -434,7 +434,7 @@ function ThemeProvider({ children }) {
 
 // Consumer component
 function ThemedButton() {
-  const { theme, toggleTheme } = ReactorJS.useContext(ThemeContext);
+  const { theme, toggleTheme } = Clyra.useContext(ThemeContext);
   
   return (
     <button 
@@ -451,7 +451,7 @@ function ThemedButton() {
 
 ```jsx
 // Create a store
-const store = ReactorJS.createStore({
+const store = Clyra.createStore({
   state: {
     count: 0,
     user: null
@@ -482,7 +482,7 @@ function ConnectedCounter() {
 
 ```jsx
 // Create reactive state
-const state = ReactorJS.reactive({
+const state = Clyra.reactive({
   count: 0,
   user: null
 });
@@ -490,7 +490,7 @@ const state = ReactorJS.reactive({
 // Component using reactive state
 function ReactiveCounter() {
   // This component will automatically re-render when state.count changes
-  ReactorJS.watchEffect(() => {
+  Clyra.watchEffect(() => {
     console.log('Count changed:', state.count);
   });
   
@@ -506,11 +506,11 @@ function ReactiveCounter() {
 
 ## 📝 Server-Side Rendering
 
-ReactorJS supports server-side rendering for improved performance and SEO:
+Clyra supports server-side rendering for improved performance and SEO:
 
 ```jsx
 // Server entry point (server.js)
-import { createServerApp } from 'reactorjs-router';
+import { createServerApp } from 'clyra-router';
 import express from 'express';
 
 // Import pages and layouts
@@ -535,7 +535,7 @@ const layouts = {
 const reactorApp = createServerApp({
   pages,
   layouts,
-  title: 'My ReactorJS App',
+  title: 'My Clyra App',
   styles: tailwindStyles // Pre-generated Tailwind CSS
 });
 
@@ -555,7 +555,7 @@ app.listen(3000, () => {
 });
 ```
 
-## 🔌 Extending ReactorJS
+## 🔌 Extending Clyra
 
 ### Creating Custom Plugins
 
@@ -565,7 +565,7 @@ module.exports = function myPlugin(options) {
   return {
     name: 'my-plugin',
     
-    // Hook into the ReactorJS lifecycle
+    // Hook into the Clyra lifecycle
     beforeBuild() {
       console.log('Before build');
     },
@@ -585,7 +585,7 @@ module.exports = function myPlugin(options) {
   };
 };
 
-// In reactorjs.config.js
+// In clyra.config.js
 module.exports = {
   // ...other config
   plugins: [
@@ -596,13 +596,13 @@ module.exports = {
 
 ## 📱 React Native Integration
 
-ReactorJS seamlessly integrates with React Native to build cross-platform applications:
+Clyra seamlessly integrates with React Native to build cross-platform applications:
 
 ```jsx
 // src/native/index.jsx
-import ReactorJS from 'reactorjs';
-import { AppRegistry } from 'reactorjs-native';
-import { reactorNative, TailwindProvider } from 'reactorjs-styling';
+import Clyra from 'clyra';
+import { AppRegistry } from 'clyra-native';
+import { reactorNative, TailwindProvider } from 'clyra-styling';
 
 import HomeScreen from './screens/home';
 import SettingsScreen from './screens/settings';
@@ -610,7 +610,7 @@ import SettingsScreen from './screens/settings';
 const { View, Text } = reactorNative;
 
 // Navigation state
-const [currentScreen, setCurrentScreen] = ReactorJS.useState('home');
+const [currentScreen, setCurrentScreen] = Clyra.useState('home');
 
 // Simple tab navigator
 const App = () => {
@@ -654,35 +654,35 @@ AppRegistry.registerComponent('MyApp', () => App);
 
 ## 🛠️ CLI Commands
 
-ReactorJS CLI provides various commands to streamline development:
+Clyra CLI provides various commands to streamline development:
 
 ```bash
 # Create a new project
-reactorjs create my-app
+clyra create my-app
 
 # Start development server
-reactorjs dev
+clyra dev
 
 # Build for production
-reactorjs build
+clyra build
 
 # Build for specific platform
-reactorjs build web
-reactorjs build native
+clyra build web
+clyra build native
 
 # Generate component
-reactorjs generate component Button
+clyra generate component Button
 
 # Generate page
-reactorjs generate page About
+clyra generate page About
 
 # Generate layout
-reactorjs generate layout Main
+clyra generate layout Main
 ```
 
 ## 📊 Performance Optimization
 
-ReactorJS includes several features for optimal performance:
+Clyra includes several features for optimal performance:
 
 - **Tree Shaking**: Eliminates unused code
 - **Code Splitting**: Loads components on demand
@@ -693,7 +693,7 @@ ReactorJS includes several features for optimal performance:
 
 ## 📚 Documentation
 
-For comprehensive documentation, visit [reactorjs.dev](https://reactorjs.dev).
+For comprehensive documentation, visit [clyra.dev](https://clyra.vercel.app).
 
 ## 🤝 Contributing
 
@@ -701,4 +701,4 @@ Contributions are welcome! Please read our [contributing guide](CONTRIBUTING.md)
 
 ## 📄 License
 
-ReactorJS is [MIT licensed](LICENSE).
+Clyra is [MIT licensed](LICENSE).

@@ -30,8 +30,8 @@ export function createSampleFiles(projectDir, options) {
   }
 
   // Create sample component
-  const buttonComponent = `import ReactorJS from 'reactorjs';
-${includeShadcn ? `import { ui } from 'reactorjs-styling';` : ''}
+  const buttonComponent = `import Clyra from 'clyra';
+${includeShadcn ? `import { ui } from 'clyra-styling';` : ''}
 
 ${useTypeScript ? `interface ButtonProps {
   children: React.ReactNode;
@@ -89,8 +89,8 @@ export default Button;
   );
   
   // Create main layout
-  const mainLayout = `import ReactorJS from 'reactorjs';
-import RouterComponents from 'reactorjs-router';
+  const mainLayout = `import Clyra from 'clyra';
+import RouterComponents from 'clyra-router';
 
 const { Link } = RouterComponents;
 
@@ -111,7 +111,7 @@ const MainLayout = ({ children }${useTypeScript ? ': MainLayoutProps' : ''}) => 
         {children}
       </main>
       <footer${includeTailwind ? ` className="bg-gray-100 p-4 text-center"` : ''}>
-        <p>Built with ReactorJS</p>
+        <p>Built with Clyra</p>
       </footer>
     </div>
   );
@@ -126,7 +126,7 @@ export default MainLayout;
   );
   
   // Create home page
-  const homePage = `import ReactorJS from 'reactorjs';
+  const homePage = `import Clyra from 'clyra';
 import Button from '../components/button.${jsxExt}';
 
 ${useTypeScript ? `interface HomePageProps {
@@ -134,7 +134,7 @@ ${useTypeScript ? `interface HomePageProps {
   query?: Record<string, string>;
 }` : ''}
 
-class HomePage extends ReactorJS.Component {
+class HomePage extends Clyra.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -162,7 +162,7 @@ class HomePage extends ReactorJS.Component {
     
     return (
       <div${includeTailwind ? ` className="max-w-4xl mx-auto"` : ''}>
-        <h1${includeTailwind ? ` className="text-3xl font-bold mb-6"` : ''}>Welcome to ReactorJS</h1>
+        <h1${includeTailwind ? ` className="text-3xl font-bold mb-6"` : ''}>Welcome to Clyra</h1>
         
         ${includeTailwind ? `<div className="bg-white rounded-lg shadow p-6 mb-6">` : '<div>'}
           <p${includeTailwind ? ` className="mb-4"` : ''}>
@@ -229,8 +229,8 @@ export default HomePage;
   );
   
   // Create about page
-  const aboutPage = `import ReactorJS from 'reactorjs';
-const { useState, useEffect } = ReactorJS;
+  const aboutPage = `import Clyra from 'clyra';
+const { useState, useEffect } = Clyra;
 
 const AboutPage = () => {
   const [data, setData] = useState([]);
@@ -238,16 +238,16 @@ const AboutPage = () => {
   useEffect(() => {
     // Simulate fetching data
     setTimeout(() => {
-      setData(['ReactorJS', 'Tailwind CSS', 'shadcn/ui', 'React Native']);
+      setData(['Clyra', 'Tailwind CSS', 'shadcn/ui', 'React Native']);
     }, 1000);
   }, []);
   
   return (
     <div${includeTailwind ? ` className="max-w-4xl mx-auto"` : ''}>
-      <h1${includeTailwind ? ` className="text-3xl font-bold mb-6"` : ''}>About ReactorJS</h1>
+      <h1${includeTailwind ? ` className="text-3xl font-bold mb-6"` : ''}>About Clyra</h1>
       
       <p${includeTailwind ? ` className="mb-4"` : ''}>
-        ReactorJS is a comprehensive JavaScript framework that combines the best features 
+        Clyra is a comprehensive JavaScript framework that combines the best features 
         from React, Next.js, Vue.js, and Angular with built-in support for Tailwind CSS, 
         shadcn/ui components, and React Native compatibility.
       </p>
@@ -277,17 +277,17 @@ export default AboutPage;
   
   // Create React Native screens
   if (platforms === 'native' || platforms === 'both') {
-    const homeScreen = `import ReactorJS from 'reactorjs';
-import { reactorNative } from 'reactorjs-styling';
+    const homeScreen = `import Clyra from 'clyra';
+import { reactorNative } from 'clyra-styling';
 
 const { View, Text, TouchableOpacity } = reactorNative;
 
 const HomeScreen = () => {
-  const [count, setCount] = ReactorJS.useState(0);
+  const [count, setCount] = Clyra.useState(0);
   
   return (
     <View className="flex-1 items-center justify-center bg-white p-4">
-      <Text className="text-2xl font-bold mb-6">ReactorJS Native</Text>
+      <Text className="text-2xl font-bold mb-6">Clyra Native</Text>
       
       <Text className="text-lg mb-4">Count: {count}</Text>
       
@@ -318,18 +318,18 @@ export default HomeScreen;
       homeScreen
     );
     
-    const aboutScreen = `import ReactorJS from 'reactorjs';
-import { reactorNative } from 'reactorjs-styling';
+    const aboutScreen = `import Clyra from 'clyra';
+import { reactorNative } from 'clyra-styling';
 
 const { View, Text, ScrollView } = reactorNative;
 
 const AboutScreen = () => {
   return (
     <ScrollView className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold mb-6">About ReactorJS Native</Text>
+      <Text className="text-2xl font-bold mb-6">About Clyra Native</Text>
       
       <Text className="mb-4">
-        ReactorJS Native allows you to build native mobile applications using the same 
+        Clyra Native allows you to build native mobile applications using the same 
         components and patterns as your web application.
       </Text>
       
@@ -357,7 +357,7 @@ export default AboutScreen;
   // Create README.md
   const readme = `# ${path.basename(projectDir)}
 
-A project built with ReactorJS - the comprehensive JavaScript framework.
+A project built with Clyra - the comprehensive JavaScript framework.
 
 ## Features
 
@@ -398,13 +398,13 @@ ${path.basename(projectDir)}/
 │   │   └── screens/    # Native screens` : ''}
 │   └── styles/         # Global styles
 ├── public/             # Static assets
-├── reactorjs.config.js # Framework configuration
+├── clyra.config.js # Framework configuration
 ${includeTailwind ? '├── tailwind.config.js  # Tailwind CSS configuration\n' : ''}└── package.json        # Project dependencies
 \`\`\`
 
 ## Documentation
 
-For more information on how to use ReactorJS, check out the [official documentation](https://reactorjs.dev).
+For more information on how to use Clyra, check out the [official documentation](https://clyra.dev).
 
 ## License
 

@@ -17,7 +17,7 @@ function createReadlineInterface() {
 }
 
 /**
- * Create a new ReactorJS project
+ * Create a new Clyra project
  * @param {string[]} args - CLI arguments
  */
 export function createNewProject(args) {
@@ -25,7 +25,7 @@ export function createNewProject(args) {
   
   if (!projectName) {
     console.error('Error: Please provide a project name');
-    console.log('Example: reactorjs create my-app');
+    console.log('Example: clyra create my-app');
     process.exit(1);
   }
   
@@ -37,7 +37,7 @@ export function createNewProject(args) {
     process.exit(1);
   }
   
-  console.log(`Creating a new ReactorJS project in ${projectDir}...`);
+  console.log(`Creating a new Clyra project in ${projectDir}...`);
   
   // Create project directory
   fs.mkdirSync(projectDir, { recursive: true });
@@ -88,18 +88,18 @@ function createProjectStructure(projectDir, options) {
     version: '0.1.0',
     private: true,
     scripts: {
-      dev: 'reactorjs dev',
-      build: 'reactorjs build',
-      start: 'reactorjs start',
+      dev: 'clyra dev',
+      build: 'clyra build',
+      start: 'clyra start',
       lint: useTypeScript ? 'eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0' : 'eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0'
     },
     dependencies: {
-      'reactorjs': '^0.1.0',
-      'reactorjs-router': '^0.1.0',
-      'reactorjs-styling': '^0.1.0'
+      'clyra': '^0.1.0',
+      'clyra-router': '^0.1.0',
+      'clyra-styling': '^0.1.0'
     },
     devDependencies: {
-      'reactorjs-cli': '^0.1.0'
+      'clyra-cli': '^0.3.0'
     }
   };
   
@@ -116,7 +116,7 @@ function createProjectStructure(projectDir, options) {
   if (platforms === 'native' || platforms === 'both') {
     packageJson.dependencies = {
       ...packageJson.dependencies,
-      'reactorjs-native': '^0.1.0'
+      'clyra-native': '^0.1.0'
     };
   }
   
@@ -133,7 +133,7 @@ function createProjectStructure(projectDir, options) {
   if (includeShadcn) {
     packageJson.dependencies = {
       ...packageJson.dependencies,
-      'reactorjs-ui': '^0.1.0'
+      'clyra-ui': '^0.1.0'
     };
   }
   
@@ -196,7 +196,7 @@ function createProjectStructure(projectDir, options) {
         moduleResolution: 'bundler',
         allowSyntheticDefaultImports: true
       },
-      include: ['reactorjs.config.ts']
+      include: ['clyra.config.ts']
     };
     
     fs.writeFileSync(
@@ -210,8 +210,8 @@ function createProjectStructure(projectDir, options) {
     );
   }
   
-  // Create ReactorJS configuration file
-  const reactorConfig = `// ReactorJS Configuration
+  // Create Clyra configuration file
+  const reactorConfig = `// Clyra Configuration
 ${useTypeScript ? 'export default ' : 'module.exports = '}({
   // General settings
   appName: '${path.basename(projectDir)}',
@@ -247,7 +247,7 @@ ${useTypeScript ? 'export default ' : 'module.exports = '}({
 `;
   
   fs.writeFileSync(
-    path.join(projectDir, `reactorjs.config.${ext}`),
+    path.join(projectDir, `clyra.config.${ext}`),
     reactorConfig
   );
   
@@ -329,7 +329,7 @@ body {
     execSync('git init', { cwd: projectDir, stdio: 'ignore' });
     fs.writeFileSync(
       path.join(projectDir, '.gitignore'),
-      `# ReactorJS generated gitignore
+      `# Clyra generated gitignore
 node_modules
 dist
 .env
@@ -349,13 +349,13 @@ android/app/build
     
     // First commit
     execSync('git add .', { cwd: projectDir, stdio: 'ignore' });
-    execSync('git commit -m "Initial commit from ReactorJS CLI"', { cwd: projectDir, stdio: 'ignore' });
+    execSync('git commit -m "Initial commit from Clyra CLI"', { cwd: projectDir, stdio: 'ignore' });
   } catch (error) {
     console.warn('Git initialization failed. You can manually initialize the repository later.');
   }
   
   console.log(`
-✅ ReactorJS project created successfully!
+✅ Clyra project created successfully!
 
 To get started:
   cd ${path.basename(projectDir)}
@@ -379,8 +379,8 @@ function createEntryFiles(projectDir, options) {
   // Create web entry file
   if (platforms === 'web' || platforms === 'both') {
     const webEntryImports = [
-      `import ReactorJS from 'reactorjs';`,
-      `import RouterComponents from 'reactorjs-router';`
+      `import Clyra from 'clyra';`,
+      `import RouterComponents from 'clyra-router';`
     ];
     
     if (includeTailwind) {
@@ -388,7 +388,7 @@ function createEntryFiles(projectDir, options) {
     }
     
     if (includeShadcn) {
-      webEntryImports.push(`import { ui, TailwindProvider } from 'reactorjs-styling';`);
+      webEntryImports.push(`import { ui, TailwindProvider } from 'clyra-styling';`);
     }
     
     const webEntryContent = `${webEntryImports.join('\n')}
@@ -463,12 +463,12 @@ export default app;
   // Create native entry file
   if (platforms === 'native' || platforms === 'both') {
     const nativeEntryImports = [
-      `import ReactorJS from 'reactorjs';`,
-      `import { AppRegistry } from 'reactorjs-native';`
+      `import Clyra from 'clyra';`,
+      `import { AppRegistry } from 'clyra-native';`
     ];
     
     if (includeTailwind || includeShadcn) {
-      nativeEntryImports.push(`import { reactorNative, ${includeShadcn ? 'ui, ' : ''}TailwindProvider } from 'reactorjs-styling';`);
+      nativeEntryImports.push(`import { reactorNative, ${includeShadcn ? 'ui, ' : ''}TailwindProvider } from 'clyra-styling';`);
     }
     
     const nativeEntryContent = `${nativeEntryImports.join('\n')}
