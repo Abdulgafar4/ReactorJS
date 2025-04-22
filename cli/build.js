@@ -7,7 +7,7 @@ import path from 'path';
  * Build the project for production
  * @param {string[]} args - CLI arguments
  */
-export default async function buildProject(args) {
+ async function buildProject(args) {
   const platform = args[0] || 'all';
   
   console.log(`Building project for ${platform}...`);
@@ -152,3 +152,5 @@ function buildNativeApp(nativeConfig) {
     console.log('- IPA: ios/build/ReactorJSApp.ipa');
   }
 }
+
+export default buildProject

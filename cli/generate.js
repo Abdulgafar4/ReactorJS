@@ -1,13 +1,13 @@
 // cli/generate.js - Component generation
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Generate a new component, page, or layout
  * @param {string[]} args - CLI arguments
  */
-function generateComponent(args) {
+export function generateComponent(args) {
   const type = args[0];
   const name = args[1];
   
@@ -435,7 +435,3 @@ function toKebabCase(str) {
     .replace(/[\s_]+/g, '-')
     .toLowerCase();
 }
-
-module.exports = {
-  generateComponent
-};

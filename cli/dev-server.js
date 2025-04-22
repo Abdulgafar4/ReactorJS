@@ -1,12 +1,11 @@
 // cli/dev-server.js - Development server
-
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Start the development server
  */
-function startDevServer() {
+export function startDevServer() {
   console.log('Starting development server...');
   
   const configPath = findConfigFile();
@@ -131,7 +130,3 @@ function getLocalIp() {
   // to find a non-internal IPv4 address
   return '192.168.1.2';
 }
-
-module.exports = {
-  startDevServer
-};

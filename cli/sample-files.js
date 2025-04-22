@@ -1,14 +1,14 @@
 // cli/sample-files.js - Generate sample project files
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Create sample pages, layouts, and components for the new project
  * @param {string} projectDir - Project directory path
  * @param {Object} options - Project options
  */
-function createSampleFiles(projectDir, options) {
+export function createSampleFiles(projectDir, options) {
   const { platforms, includeTailwind, includeShadcn, useTypeScript } = options;
   const ext = useTypeScript ? 'ts' : 'js';
   const jsxExt = useTypeScript ? 'tsx' : 'jsx';
@@ -426,7 +426,7 @@ MIT
  * @param {boolean} [options.includeShadcn=false] - Include shadcn/ui components
  * @param {boolean} [options.useTypeScript=false] - Use TypeScript
  */
-function generateSampleProjectFiles(projectDir, options = {}) {
+export function generateSampleProjectFiles(projectDir, options = {}) {
   // Set default options
   const defaultOptions = {
     platforms: 'web',
@@ -454,8 +454,3 @@ function generateSampleProjectFiles(projectDir, options = {}) {
   
   console.log(`Sample project files generated in ${projectDir}`);
 }
-
-module.exports = {
-  createSampleFiles,
-  generateSampleProjectFiles
-};

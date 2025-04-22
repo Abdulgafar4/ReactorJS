@@ -1,9 +1,10 @@
 // cli/create-app.js - Project scaffolding
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
-const readline = require('readline');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import readline from 'readline';
+import  { createSampleFiles } from "./sample-files.js"
 
 /**
  * Create interface for command-line input
@@ -19,7 +20,7 @@ function createReadlineInterface() {
  * Create a new ReactorJS project
  * @param {string[]} args - CLI arguments
  */
-function createNewProject(args) {
+export function createNewProject(args) {
   const projectName = args[0];
   
   if (!projectName) {
@@ -502,6 +503,3 @@ export default App;
   }
 }
 
-module.exports = {
-  createNewProject
-};
