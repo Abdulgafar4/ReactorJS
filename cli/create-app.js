@@ -94,13 +94,9 @@ function createProjectStructure(projectDir, options) {
       lint: useTypeScript ? 'eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0' : 'eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0'
     },
     dependencies: {
-      'clyra': '^0.1.0',
-      'clyra-router': '^0.1.0',
-      'clyra-styling': '^0.1.0'
+      'clyra': '^0.3.0', // Use the main clyra package instead of separate packages
     },
-    devDependencies: {
-      'clyra-cli': '^0.3.0'
-    }
+    devDependencies: {}
   };
   
   // Add TypeScript dependencies if needed
@@ -112,14 +108,6 @@ function createProjectStructure(projectDir, options) {
     };
   }
   
-  // Add platform-specific dependencies
-  if (platforms === 'native' || platforms === 'both') {
-    packageJson.dependencies = {
-      ...packageJson.dependencies,
-      'clyra-native': '^0.1.0'
-    };
-  }
-  
   // Add styling dependencies
   if (includeTailwind) {
     packageJson.devDependencies = {
@@ -127,13 +115,6 @@ function createProjectStructure(projectDir, options) {
       'tailwindcss': '^3.3.0',
       'postcss': '^8.4.0',
       'autoprefixer': '^10.4.0'
-    };
-  }
-  
-  if (includeShadcn) {
-    packageJson.dependencies = {
-      ...packageJson.dependencies,
-      'clyra-ui': '^0.1.0'
     };
   }
   
@@ -211,7 +192,7 @@ function createProjectStructure(projectDir, options) {
   }
   
   // Create Clyra configuration file
-  const reactorConfig = `// Clyra Configuration
+  const clyraConfig = `// Clyra Configuration
 ${useTypeScript ? 'export default ' : 'module.exports = '}({
   // General settings
   appName: '${path.basename(projectDir)}',
@@ -248,7 +229,7 @@ ${useTypeScript ? 'export default ' : 'module.exports = '}({
   
   fs.writeFileSync(
     path.join(projectDir, `clyra.config.${ext}`),
-    reactorConfig
+    clyraConfig
   );
   
   // Create Tailwind configuration if needed
@@ -379,8 +360,7 @@ function createEntryFiles(projectDir, options) {
   // Create web entry file
   if (platforms === 'web' || platforms === 'both') {
     const webEntryImports = [
-      `import Clyra from 'clyra';`,
-      `import RouterComponents from 'clyra-router';`
+      `import { Clyra, Router } from 'clyra';`, // Import from main clyra package
     ];
     
     if (includeTailwind) {
@@ -388,12 +368,12 @@ function createEntryFiles(projectDir, options) {
     }
     
     if (includeShadcn) {
-      webEntryImports.push(`import { ui, TailwindProvider } from 'clyra-styling';`);
+      webEntryImports.push(`import { ui, TailwindProvider } from 'clyra';`); // Import from main clyra package
     }
     
     const webEntryContent = `${webEntryImports.join('\n')}
 
-const { hydrate } = RouterComponents;
+const { hydrate } = Router;
 
 // Import pages
 import HomePage from './app/pages/home.${jsxExt}';
@@ -463,15 +443,16 @@ export default app;
   // Create native entry file
   if (platforms === 'native' || platforms === 'both') {
     const nativeEntryImports = [
-      `import Clyra from 'clyra';`,
-      `import { AppRegistry } from 'clyra-native';`
+      `import { Clyra, Native } from 'clyra';`, // Import from main clyra package
     ];
     
     if (includeTailwind || includeShadcn) {
-      nativeEntryImports.push(`import { reactorNative, ${includeShadcn ? 'ui, ' : ''}TailwindProvider } from 'clyra-styling';`);
+      nativeEntryImports.push(`import { ClyraStyled, ${includeShadcn ? 'ui, ' : ''}TailwindProvider } from 'clyra';`); // Import from main clyra package
     }
     
     const nativeEntryContent = `${nativeEntryImports.join('\n')}
+
+const { AppRegistry } = Native;
 
 // Import screens
 import HomeScreen from './native/screens/home.${jsxExt}';
@@ -482,9 +463,9 @@ const App = () => {
   return (
     ${includeTailwind || includeShadcn ? `<TailwindProvider>
       ${includeShadcn ? `<ui.ThemeProvider theme="light">` : ''}` : ''}
-      <reactorNative.View className="flex-1 bg-white">
+      <ClyraStyled.View className="flex-1 bg-white">
         <HomeScreen />
-      </reactorNative.View>
+      </ClyraStyled.View>
     ${includeShadcn ? `</ui.ThemeProvider>` : ''}
     ${includeTailwind || includeShadcn ? `</TailwindProvider>` : ''}
   );
@@ -502,4 +483,3 @@ export default App;
     );
   }
 }
-

@@ -1,10 +1,10 @@
-// cli/sample-files.js - Generate sample project files
+// cli/sample-files.js - Sample files for new projects
 
 import fs from 'fs';
 import path from 'path';
 
 /**
- * Create sample pages, layouts, and components for the new project
+ * Create sample files for the project
  * @param {string} projectDir - Project directory path
  * @param {Object} options - Project options
  */
@@ -12,445 +12,233 @@ export function createSampleFiles(projectDir, options) {
   const { platforms, includeTailwind, includeShadcn, useTypeScript } = options;
   const ext = useTypeScript ? 'ts' : 'js';
   const jsxExt = useTypeScript ? 'tsx' : 'jsx';
-  
-  // Ensure project directory structure exists
-  const createDirectoryIfNotExists = (dir) => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-  };
 
-  // Create necessary directories
-  createDirectoryIfNotExists(path.join(projectDir, 'src/app/components'));
-  createDirectoryIfNotExists(path.join(projectDir, 'src/app/layouts'));
-  createDirectoryIfNotExists(path.join(projectDir, 'src/app/pages'));
-  
-  if (platforms === 'native' || platforms === 'both') {
-    createDirectoryIfNotExists(path.join(projectDir, 'src/native/screens'));
-  }
+  // Create README.md
+  const readmeContent = `# ${path.basename(projectDir)}
 
-  // Create sample component
-  const buttonComponent = `import Clyra from 'clyra';
-${includeShadcn ? `import { ui } from 'clyra-styling';` : ''}
+This project was created with [Clyra](https://clyra.vercel.app).
 
-${useTypeScript ? `interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'small' | 'medium' | 'large';
-  className?: string;
-}` : ''}
+## Getting Started
 
-const Button = ({ 
-  children, 
-  onClick, 
-  variant = 'primary', 
-  size = 'medium', 
-  className = '' 
-}${useTypeScript ? ': ButtonProps' : ''}) => {
-  ${includeShadcn ? `return (
-    <ui.Button 
-      onClick={onClick}
-      variant={variant === 'primary' ? 'default' : variant === 'secondary' ? 'secondary' : 'outline'}
-      size={size === 'small' ? 'sm' : size === 'large' ? 'lg' : 'default'}
-      className={className}
-    >
-      {children}
-    </ui.Button>
-  );` : `const baseClasses = 'rounded font-medium transition-colors';
-  
-  const variantClasses = {
-    primary: 'bg-primary text-white hover:bg-primary/90',
-    secondary: 'bg-secondary text-white hover:bg-secondary/90',
-    outline: 'border border-gray-300 bg-transparent hover:bg-gray-50'
-  };
-  
-  const sizeClasses = {
-    small: 'px-3 py-1 text-sm',
-    medium: 'px-4 py-2',
-    large: 'px-6 py-3 text-lg'
-  };
-  
-  const combinedClasses = \`\${baseClasses} \${variantClasses[variant]} \${sizeClasses[size]} \${className}\`;
-  
-  return (
-    <button className={combinedClasses} onClick={onClick}>
-      {children}
-    </button>
-  );`}
-};
+First, run the development server:
 
-export default Button;
+\`\`\`bash
+npm run dev
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Project Structure
+
+- \`src/app/\`: Web application code
+- \`src/app/pages/\`: Page components
+- \`src/app/layouts/\`: Layout components
+- \`src/app/components/\`: Reusable components
+${platforms === 'native' || platforms === 'both' ? `- \`src/native/\`: Native application code
+- \`src/native/screens/\`: Screen components
+- \`src/native/components/\`: Native-specific components` : ''}
+- \`src/styles/\`: Global styles
+- \`public/\`: Static assets
+
+## Learn More
+
+To learn more about Clyra, check out the [Clyra documentation](https://clyra.vercel.app/docs).
 `;
-  
+
   fs.writeFileSync(
-    path.join(projectDir, `src/app/components/button.${jsxExt}`),
-    buttonComponent
+    path.join(projectDir, 'README.md'),
+    readmeContent
   );
-  
-  // Create main layout
-  const mainLayout = `import Clyra from 'clyra';
-import RouterComponents from 'clyra-router';
 
-const { Link } = RouterComponents;
+  // Create web sample files
+  if (platforms === 'web' || platforms === 'both') {
+    // Create components
+    const headerComponent = `import { Link } from 'clyra';
 
-${useTypeScript ? `interface MainLayoutProps {
-  children: React.ReactNode;
-}` : ''}
-
-const MainLayout = ({ children }${useTypeScript ? ': MainLayoutProps' : ''}) => {
+export default function Header() {
   return (
-    <div${includeTailwind ? ` className="min-h-screen flex flex-col"` : ''}>
-      <header${includeTailwind ? ` className="bg-primary text-white p-4"` : ''}>
-        <nav${includeTailwind ? ` className="flex gap-4"` : ''}>
-          <Link href="/"${includeTailwind ? ` className="hover:underline"` : ''}>Home</Link>
-          <Link href="/about"${includeTailwind ? ` className="hover:underline"` : ''}>About</Link>
+    <header className="p-4 bg-primary text-white">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-xl font-bold">Clyra App</h1>
+        <nav>
+          <ul className="flex space-x-4">
+            <li><Link href="/" className="hover:underline">Home</Link></li>
+            <li><Link href="/about" className="hover:underline">About</Link></li>
+          </ul>
         </nav>
-      </header>
-      <main${includeTailwind ? ` className="flex-1 p-4"` : ''}>
+      </div>
+    </header>
+  );
+}`;
+
+    fs.writeFileSync(
+      path.join(projectDir, `src/app/components/Header.${jsxExt}`),
+      headerComponent
+    );
+
+    const footerComponent = `export default function Footer() {
+  return (
+    <footer className="p-4 bg-gray-100 text-center">
+      <div className="container mx-auto">
+        <p className="text-sm text-gray-600">
+          &copy; {new Date().getFullYear()} ${path.basename(projectDir)} - Created with Clyra
+        </p>
+      </div>
+    </footer>
+  );
+}`;
+
+    fs.writeFileSync(
+      path.join(projectDir, `src/app/components/Footer.${jsxExt}`),
+      footerComponent
+    );
+
+    // Create layouts
+    const mainLayout = `import Header from '../components/Header.${jsxExt}';
+import Footer from '../components/Footer.${jsxExt}';
+
+export default function MainLayout({ children }) {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
         {children}
       </main>
-      <footer${includeTailwind ? ` className="bg-gray-100 p-4 text-center"` : ''}>
-        <p>Built with Clyra</p>
-      </footer>
+      <Footer />
     </div>
   );
-};
+}`;
 
-export default MainLayout;
-`;
-  
-  fs.writeFileSync(
-    path.join(projectDir, `src/app/layouts/main.${jsxExt}`),
-    mainLayout
-  );
-  
-  // Create home page
-  const homePage = `import Clyra from 'clyra';
-import Button from '../components/button.${jsxExt}';
+    fs.writeFileSync(
+      path.join(projectDir, `src/app/layouts/main.${jsxExt}`),
+      mainLayout
+    );
 
-${useTypeScript ? `interface HomePageProps {
-  params?: Record<string, string>;
-  query?: Record<string, string>;
-}` : ''}
-
-class HomePage extends Clyra.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: 0
-    };
-  }
-  
-  // Server-side data fetching (similar to Next.js)
-  static async getInitialProps({ params, query }) {
-    // This would typically fetch data from an API
-    return {
-      serverData: {
-        message: 'Hello from the server!'
-      }
-    };
-  }
-  
-  incrementCounter = () => {
-    this.setState({ counter: this.state.counter + 1 });
-  }
-  
-  render() {
-    const { serverData } = this.props;
-    const { counter } = this.state;
-    
-    return (
-      <div${includeTailwind ? ` className="max-w-4xl mx-auto"` : ''}>
-        <h1${includeTailwind ? ` className="text-3xl font-bold mb-6"` : ''}>Welcome to Clyra</h1>
-        
-        ${includeTailwind ? `<div className="bg-white rounded-lg shadow p-6 mb-6">` : '<div>'}
-          <p${includeTailwind ? ` className="mb-4"` : ''}>
-            Server message: {serverData?.message}
-          </p>
-          
-          <p${includeTailwind ? ` className="mb-4"` : ''}>Counter: {counter}</p>
-          
-          <Button 
-            onClick={this.incrementCounter}
-            variant="primary"
-            ${includeTailwind ? `className="mr-2"` : ''}
-          >
-            Increment
-          </Button>
-          
-          <Button 
-            variant="outline"
-          >
-            Reset
-          </Button>
-        </div>
-        
-        ${includeTailwind ? `<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-2">Features</h2>
-            <ul className="list-disc pl-5">
-              <li>Virtual DOM with efficient diffing</li>
-              <li>Server-side rendering</li>
-              <li>File-based routing</li>
-              <li>Component system with lifecycle methods</li>
-              <li>Hooks for functional components</li>
-            </ul>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-2">Getting Started</h2>
-            <p>Edit <code className="bg-gray-100 px-1 py-0.5 rounded">src/app/pages/home.${jsxExt}</code> to get started.</p>
-          </div>
-        </div>` : `<div>
-          <h2>Features</h2>
-          <ul>
-            <li>Virtual DOM with efficient diffing</li>
-            <li>Server-side rendering</li>
-            <li>File-based routing</li>
-            <li>Component system with lifecycle methods</li>
-            <li>Hooks for functional components</li>
+    // Create pages
+    const homePage = `${useTypeScript ? 'import React from "react";\n\n' : ''}export default function HomePage() {
+  return (
+    <div className="container mx-auto p-4">
+      <div className="max-w-2xl mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-primary mb-4">Welcome to Clyra</h1>
+        <p className="text-lg mb-4">
+          This is a sample Clyra application. Edit <code>src/app/pages/home.${jsxExt}</code> to get started.
+        </p>
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2">Quick Links</h2>
+          <ul className="list-disc list-inside space-y-1 text-blue-600">
+            <li><a href="https://clyra.vercel.app/docs" target="_blank" rel="noopener noreferrer" className="hover:underline">Documentation</a></li>
+            <li><a href="https://github.com/Abdulgafar4/ReactorJS" target="_blank" rel="noopener noreferrer" className="hover:underline">GitHub Repository</a></li>
           </ul>
-          
-          <h2>Getting Started</h2>
-          <p>Edit <code>src/app/pages/home.${jsxExt}</code> to get started.</p>
-        </div>`}
+        </div>
       </div>
+    </div>
+  );
+}`;
+
+    fs.writeFileSync(
+      path.join(projectDir, `src/app/pages/home.${jsxExt}`),
+      homePage
+    );
+
+    const aboutPage = `export default function AboutPage() {
+  return (
+    <div className="container mx-auto p-4">
+      <div className="max-w-2xl mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-primary mb-4">About This App</h1>
+        <p className="mb-4">
+          This is a sample application built with Clyra, a comprehensive JavaScript framework for building web and native applications.
+        </p>
+        <p className="mb-4">
+          Clyra provides a unified approach to building applications across different platforms, with a focus on developer experience and performance.
+        </p>
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2">Features</h2>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Cross-platform development</li>
+            <li>Modern architecture</li>
+            <li>Developer-friendly APIs</li>
+            <li>Performance optimizations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}`;
+
+    fs.writeFileSync(
+      path.join(projectDir, `src/app/pages/about.${jsxExt}`),
+      aboutPage
+    );
+
+    // Create favicon
+    const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="4" fill="#3b82f6"/>
+  <path d="M8 8 L24 8 L24 12 L16 20 L16 24 L12 24 L12 20 L8 16 Z" fill="white"/>
+</svg>`;
+
+    fs.writeFileSync(
+      path.join(projectDir, 'public/favicon.svg'),
+      faviconSvg
     );
   }
-}
 
-export default HomePage;
-`;
-  
-  fs.writeFileSync(
-    path.join(projectDir, `src/app/pages/home.${jsxExt}`),
-    homePage
-  );
-  
-  // Create about page
-  const aboutPage = `import Clyra from 'clyra';
-const { useState, useEffect } = Clyra;
-
-const AboutPage = () => {
-  const [data, setData] = useState([]);
-  
-  useEffect(() => {
-    // Simulate fetching data
-    setTimeout(() => {
-      setData(['Clyra', 'Tailwind CSS', 'shadcn/ui', 'React Native']);
-    }, 1000);
-  }, []);
-  
-  return (
-    <div${includeTailwind ? ` className="max-w-4xl mx-auto"` : ''}>
-      <h1${includeTailwind ? ` className="text-3xl font-bold mb-6"` : ''}>About Clyra</h1>
-      
-      <p${includeTailwind ? ` className="mb-4"` : ''}>
-        Clyra is a comprehensive JavaScript framework that combines the best features 
-        from React, Next.js, Vue.js, and Angular with built-in support for Tailwind CSS, 
-        shadcn/ui components, and React Native compatibility.
-      </p>
-      
-      <h2${includeTailwind ? ` className="text-2xl font-semibold mt-6 mb-4"` : ''}>Technologies Used</h2>
-      
-      {data.length > 0 ? (
-        <ul${includeTailwind ? ` className="list-disc pl-5"` : ''}>
-          {data.map((item, index) => (
-            <li key={index}${includeTailwind ? ` className="mb-1"` : ''}>{item}</li>
-          ))}
-        </ul>
-      ) : (
-        <p${includeTailwind ? ` className="italic"` : ''}>Loading data...</p>
-      )}
-    </div>
-  );
-};
-
-export default AboutPage;
-`;
-  
-  fs.writeFileSync(
-    path.join(projectDir, `src/app/pages/about.${jsxExt}`),
-    aboutPage
-  );
-  
-  // Create React Native screens
+  // Create native sample files
   if (platforms === 'native' || platforms === 'both') {
-    const homeScreen = `import Clyra from 'clyra';
-import { reactorNative } from 'clyra-styling';
+    // Create screens
+    const homeScreen = `import { Native, Text } from 'clyra';
+${includeTailwind ? "\nimport { ClyraStyled } from 'clyra';" : ""}
 
-const { View, Text, TouchableOpacity } = reactorNative;
-
-const HomeScreen = () => {
-  const [count, setCount] = Clyra.useState(0);
-  
+export default function HomeScreen() {
   return (
-    <View className="flex-1 items-center justify-center bg-white p-4">
-      <Text className="text-2xl font-bold mb-6">Clyra Native</Text>
-      
-      <Text className="text-lg mb-4">Count: {count}</Text>
-      
-      <View className="flex-row space-x-4">
-        <TouchableOpacity 
-          className="bg-primary px-4 py-2 rounded"
-          onPress={() => setCount(count + 1)}
-        >
-          <Text className="text-white font-medium">Increment</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          className="bg-secondary px-4 py-2 rounded"
-          onPress={() => setCount(0)}
-        >
-          <Text className="text-white font-medium">Reset</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    ${includeTailwind ? 
+      '<ClyraStyled.View className="flex-1 p-4 bg-white justify-center items-center">' : 
+      '<Native.View style={{flex: 1, padding: 16, backgroundColor: "white", justifyContent: "center", alignItems: "center"}}>'
+    }
+      ${includeTailwind ? 
+        '<Text className="text-2xl font-bold text-primary mb-4">Welcome to Clyra Native</Text>' : 
+        '<Text style={{fontSize: 24, fontWeight: "bold", color: "#3b82f6", marginBottom: 16}}>Welcome to Clyra Native</Text>'
+      }
+      ${includeTailwind ? 
+        '<Text className="text-center">This is a sample native screen. Edit src/native/screens/home.${jsxExt} to get started.</Text>' : 
+        '<Text style={{textAlign: "center"}}>This is a sample native screen. Edit src/native/screens/home.${jsxExt} to get started.</Text>'
+      }
+    ${includeTailwind ? '</ClyraStyled.View>' : '</Native.View>'}
   );
-};
+}`;
 
-export default HomeScreen;
-`;
-    
     fs.writeFileSync(
       path.join(projectDir, `src/native/screens/home.${jsxExt}`),
       homeScreen
     );
-    
-    const aboutScreen = `import Clyra from 'clyra';
-import { reactorNative } from 'clyra-styling';
 
-const { View, Text, ScrollView } = reactorNative;
+    const aboutScreen = `import { Native, Text } from 'clyra';
+${includeTailwind ? "\nimport { ClyraStyled } from 'clyra';" : ""}
 
-const AboutScreen = () => {
+export default function AboutScreen() {
   return (
-    <ScrollView className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold mb-6">About Clyra Native</Text>
-      
-      <Text className="mb-4">
-        Clyra Native allows you to build native mobile applications using the same 
-        components and patterns as your web application.
-      </Text>
-      
-      <Text className="text-xl font-semibold mt-4 mb-2">Features</Text>
-      
-      <View className="ml-4">
-        <Text className="mb-2">• Cross-platform components</Text>
-        <Text className="mb-2">• Tailwind CSS support</Text>
-        <Text className="mb-2">• Consistent API with web</Text>
-        <Text className="mb-2">• Native performance</Text>
-      </View>
-    </ScrollView>
+    ${includeTailwind ? 
+      '<ClyraStyled.View className="flex-1 p-4 bg-white justify-center items-center">' : 
+      '<Native.View style={{flex: 1, padding: 16, backgroundColor: "white", justifyContent: "center", alignItems: "center"}}>'
+    }
+      ${includeTailwind ? 
+        '<Text className="text-2xl font-bold text-primary mb-4">About This App</Text>' : 
+        '<Text style={{fontSize: 24, fontWeight: "bold", color: "#3b82f6", marginBottom: 16}}>About This App</Text>'
+      }
+      ${includeTailwind ? 
+        '<Text className="text-center mb-4">This is a sample native application built with Clyra.</Text>' : 
+        '<Text style={{textAlign: "center", marginBottom: 16}}>This is a sample native application built with Clyra.</Text>'
+      }
+      ${includeTailwind ? 
+        '<Text className="text-center">Clyra provides a unified approach to building applications across different platforms.</Text>' : 
+        '<Text style={{textAlign: "center"}}>Clyra provides a unified approach to building applications across different platforms.</Text>'
+      }
+    ${includeTailwind ? '</ClyraStyled.View>' : '</Native.View>'}
   );
-};
+}`;
 
-export default AboutScreen;
-`;
-    
     fs.writeFileSync(
       path.join(projectDir, `src/native/screens/about.${jsxExt}`),
       aboutScreen
     );
   }
-  
-  // Create README.md
-  const readme = `# ${path.basename(projectDir)}
-
-A project built with Clyra - the comprehensive JavaScript framework.
-
-## Features
-
-- **Virtual DOM**: Efficient rendering with intelligent diffing
-- **Component System**: Both class and function components with hooks
-- **Server-Side Rendering**: Improved SEO and performance
-- **File-Based Routing**: Simplified navigation structure
-- **Styling Solutions**: ${includeTailwind ? 'Built-in Tailwind CSS' : 'Custom styling'} ${includeShadcn ? 'and shadcn/ui components' : ''}
-- ${platforms === 'both' ? '**Cross-Platform**: Web and mobile from a single codebase' : platforms === 'native' ? '**Native**: Mobile-first application development' : '**Web-Focused**: Optimized for web applications'}
-
-## Getting Started
-
-\`\`\`bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm run start
-\`\`\`
-
-## Project Structure
-
-\`\`\`
-${path.basename(projectDir)}/
-├── src/                # Source code
-│   ├── app/            # Web application
-│   │   ├── components/ # Reusable components
-│   │   ├── layouts/    # Page layouts
-│   │   └── pages/      # Page components${platforms === 'native' || platforms === 'both' ? `
-│   ├── native/         # Native application
-│   │   ├── components/ # Native components
-│   │   └── screens/    # Native screens` : ''}
-│   └── styles/         # Global styles
-├── public/             # Static assets
-├── clyra.config.js # Framework configuration
-${includeTailwind ? '├── tailwind.config.js  # Tailwind CSS configuration\n' : ''}└── package.json        # Project dependencies
-\`\`\`
-
-## Documentation
-
-For more information on how to use Clyra, check out the [official documentation](https://clyra.dev).
-
-## License
-
-MIT
-`;
-  
-  fs.writeFileSync(
-    path.join(projectDir, 'README.md'),
-    readme
-  );
-}
-
-/**
- * Generate CLI for creating sample project files
- * @param {string} projectDir - Project directory path
- * @param {Object} options - Project configuration options
- * @param {string} [options.platforms='web'] - Platforms to generate (web, native, or both)
- * @param {boolean} [options.includeTailwind=false] - Include Tailwind CSS classes
- * @param {boolean} [options.includeShadcn=false] - Include shadcn/ui components
- * @param {boolean} [options.useTypeScript=false] - Use TypeScript
- */
-export function generateSampleProjectFiles(projectDir, options = {}) {
-  // Set default options
-  const defaultOptions = {
-    platforms: 'web',
-    includeTailwind: false,
-    includeShadcn: false,
-    useTypeScript: false
-  };
-  
-  // Merge provided options with defaults
-  const finalOptions = { ...defaultOptions, ...options };
-  
-  // Validate platforms option
-  const validPlatforms = ['web', 'native', 'both'];
-  if (!validPlatforms.includes(finalOptions.platforms)) {
-    throw new Error(`Invalid platforms option. Must be one of: ${validPlatforms.join(', ')}`);
-  }
-  
-  // Ensure project directory exists
-  if (!fs.existsSync(projectDir)) {
-    fs.mkdirSync(projectDir, { recursive: true });
-  }
-  
-  // Create sample files
-  createSampleFiles(projectDir, finalOptions);
-  
-  console.log(`Sample project files generated in ${projectDir}`);
 }
