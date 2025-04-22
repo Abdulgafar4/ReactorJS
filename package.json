@@ -8,7 +8,7 @@
         "./build": "./cli/build.js"
     },
     "bin": {
-        "clyra": "./cli/index.js"
+        "clyra": "cli/index.js"
     },
     "engines": {
         "node": ">=18.0.0"
@@ -32,7 +32,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Abdulgafar4/ReactorJS.git"
+        "url": "git+https://github.com/Abdulgafar4/ReactorJS.git"
     },
     "homepage": "https://clyra.vercel.app",
     "bugs": {
